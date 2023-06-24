@@ -129,7 +129,58 @@ namespace EmployeePayrollAdonet
         }
 
 
-       
+        public void RetrieveData()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(@"data source=DESKTOP-HDRGJGO\SQLEXPRESS; initial catalog=Payroll_Service; integrated security=true;");
+                con.Open();
+
+                string query = "SELECT * FROM employeePayroll";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    Console.WriteLine("Records from employeePayroll table:");
+                    Console.WriteLine("-----------------------------------");
+                    Console.WriteLine("Columns_Id\tName\tSalary\tStartDate\tGender\tPhone\tAddress\tDepartment\tDeduction\tTaxable_Pay\tIncome_Tax\tNet_Pay");
+                    Console.WriteLine("-------------------------------------------------------------");
+
+                    while (reader.Read())
+                    {
+                        int columnsId = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        string salary = reader.GetString(2);
+                        DateTime startDate = reader.GetDateTime(3);
+                        string gender = reader.GetString(4);
+                        int phone = reader.GetInt32(5);
+                        string address = reader.GetString(6);
+                        string department = reader.GetString(7);
+                        int deduction = reader.GetInt32(8);
+                        int taxablePay = reader.GetInt32(9);
+                        int incomeTax = reader.GetInt32(10);
+                        int netPay = reader.GetInt32(11);
+
+                        Console.WriteLine($"{columnsId}\t\t{name}\t{salary}\t{startDate.ToShortDateString()}\t{gender}\t{phone}\t{address}\t{department}\t{deduction}\t{taxablePay}\t{incomeTax}\t{netPay}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No records found in the employeePayroll table.");
+                }
+
+                reader.Close();
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+
 
     }
 }

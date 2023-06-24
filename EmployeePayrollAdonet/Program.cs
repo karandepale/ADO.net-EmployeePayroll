@@ -10,8 +10,9 @@ namespace EmployeePayrollAdonet
 
             PayrollServices obj = new PayrollServices();
             // obj.CreateDataBase();
-           // obj.CreateTable();
-            obj.InsertData();
+            // obj.CreateTable();
+            // obj.InsertData();
+               obj.RetrieveData();
         }
     }
 }
