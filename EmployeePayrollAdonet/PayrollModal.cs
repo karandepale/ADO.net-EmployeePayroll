@@ -16,9 +16,9 @@ namespace EmployeePayrollAdonet
         public long Phone { get; set; }
         public string Address { get; set; }
         public string Department { get; set; }
-        public long Deduction { get; set; }
-        public float Taxable_Pay { get; set; }
-        public float Income_Tax { get; set; }
-        public float Net_Pay { get; set; }
+        public int Deduction { get; set; }
+        public int Taxable_Pay { get; set; }
+        public int Income_Tax { get; set; }
+        public int Net_Pay { get; set; }
     }
 }
