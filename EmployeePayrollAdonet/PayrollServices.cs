@@ -9,9 +9,10 @@ namespace EmployeePayrollAdonet
 {
     public class PayrollServices
     {
-        public  void CreateDataBase()
+        public void CreateDataBase()
         {
-            try {
+            try
+            {
                 SqlConnection con = new SqlConnection("data source=DESKTOP-HDRGJGO\\SQLEXPRESS; initial catalog=master; integrated security=true;");
                 con.Open();
 
@@ -20,16 +21,17 @@ namespace EmployeePayrollAdonet
                 cmd.ExecuteNonQuery();
                 Console.WriteLine("Data Base Created Sussfully...");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            
+
         }
 
         public void CreateTable()
         {
-            try {
+            try
+            {
                 SqlConnection con = new SqlConnection(@"data source=DESKTOP-HDRGJGO\SQLEXPRESS; initial catalog=Payroll_Service; integrated security=true;");
                 con.Open();
 
@@ -39,23 +41,23 @@ namespace EmployeePayrollAdonet
                     "Salary varchar(10)," +
                     "StartDate date," +
                     "Gender varchar(200)," +
-                    "Phone int,"+
-                    "Address varchar (200),"+
-                    "Department varchar(200),"+
-                    "Deduction int,"+
-                    "Taxable_Pay int,"+
-                    "Income_Tax int,"+
-                    "Net_Pay int,"+
+                    "Phone int," +
+                    "Address varchar (200)," +
+                    "Department varchar(200)," +
+                    "Deduction int," +
+                    "Taxable_Pay int," +
+                    "Income_Tax int," +
+                    "Net_Pay int," +
                     ")";
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.ExecuteNonQuery();
                 Console.WriteLine("Table Created Sussessfully...");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            
+
         }
 
         public void InsertData()
@@ -179,6 +181,98 @@ namespace EmployeePayrollAdonet
                 Console.WriteLine(e.Message);
             }
         }
+
+
+
+
+        public void RetrieveSalaryData(string employeeName)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(@"data source=DESKTOP-HDRGJGO\SQLEXPRESS; initial catalog=Payroll_Service; integrated security=true;");
+                con.Open();
+
+                string query = $"SELECT Salary FROM employeePayroll WHERE Name = '{employeeName}'";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    Console.WriteLine($"Salary data for employee '{employeeName}':");
+                    Console.WriteLine("----------------------");
+
+                    while (reader.Read())
+                    {
+                        string salary = reader.GetString(0);
+                        Console.WriteLine($"Salary: {salary}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"No salary data found for employee '{employeeName}'.");
+                }
+
+                reader.Close();
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public void RetrieveEmployeesByDateRange(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(@"data source=DESKTOP-HDRGJGO\SQLEXPRESS; initial catalog=Payroll_Service; integrated security=true;");
+                con.Open();
+
+                string query = $"SELECT * FROM employeePayroll WHERE StartDate BETWEEN '{startDate.ToString("yyyy-MM-dd")}' AND '{endDate.ToString("yyyy-MM-dd")}'";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    Console.WriteLine($"Employees who have joined between {startDate.ToShortDateString()} and {endDate.ToShortDateString()}:");
+                    Console.WriteLine("-------------------------------------------------------------");
+                    Console.WriteLine("Columns_Id\tName\tSalary\tStartDate\tGender\tPhone\tAddress\tDepartment\tDeduction\tTaxable_Pay\tIncome_Tax\tNet_Pay");
+                    Console.WriteLine("-------------------------------------------------------------");
+
+                    while (reader.Read())
+                    {
+                        int columnsId = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        string salary = reader.GetString(2);
+                        DateTime empStartDate = reader.GetDateTime(3);
+                        string gender = reader.GetString(4);
+                        int phone = reader.GetInt32(5);
+                        string address = reader.GetString(6);
+                        string department = reader.GetString(7);
+                        int deduction = reader.GetInt32(8);
+                        int taxablePay = reader.GetInt32(9);
+                        int incomeTax = reader.GetInt32(10);
+                        int netPay = reader.GetInt32(11);
+
+                        Console.WriteLine($"{columnsId}\t\t{name}\t{salary}\t{empStartDate.ToShortDateString()}\t{gender}\t{phone}\t{address}\t{department}\t{deduction}\t{taxablePay}\t{incomeTax}\t{netPay}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No employees found within the specified date range.");
+                }
+
+                reader.Close();
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
 
 
 
