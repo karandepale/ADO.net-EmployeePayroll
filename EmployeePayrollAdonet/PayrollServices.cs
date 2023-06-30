@@ -383,6 +383,33 @@ namespace EmployeePayrollAdonet
 
 
 
+        // UC8:- EXTEND TABLE (ADDING  EXTRA COLUMNS INTO TABLE)
+        public void ExtendEmployeePayrollTable()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(@"data source=DESKTOP-HDRGJGO\SQLEXPRESS; initial catalog=Payroll_Service; integrated security=true;");
+                con.Open();
+
+                // Add new columns to the employeePayroll table
+                string query = "ALTER TABLE employeePayroll " +
+                               "ADD Address VARCHAR(200) DEFAULT 'Not specified', " +
+                               "    Department VARCHAR(200) NOT NULL";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Extended employeePayroll table successfully.");
+
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+
+
 
     }
 }

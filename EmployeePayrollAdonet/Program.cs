@@ -36,7 +36,12 @@ namespace EmployeePayrollAdonet
 
 
             // UC7:- PERFORM AGGREGATE FUNCTION ON TABLE DATA 
-            obj.AggregateAndGenderAnalysis();
+            //obj.AggregateAndGenderAnalysis();
+
+
+
+            // UC8:- ADDING NEW COLUMNS INTO TABLE 
+            obj.ExtendEmployeePayrollTable();
 
 
         }
