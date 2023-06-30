@@ -334,6 +334,55 @@ namespace EmployeePayrollAdonet
 
 
 
+        // UC7:- PERFORM  AGGREGATE FUNCTIONS:-
+        public void AggregateAndGenderAnalysis()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(@"data source=DESKTOP-HDRGJGO\SQLEXPRESS; initial catalog=Payroll_Service; integrated security=true;");
+                con.Open();
+
+                string query = "SELECT Gender, SUM(CAST(Salary AS decimal)) AS TotalSalary, AVG(CAST(Salary AS decimal)) AS AverageSalary, " +
+                               "MIN(CAST(Salary AS decimal)) AS MinSalary, MAX(CAST(Salary AS decimal)) AS MaxSalary, COUNT(*) AS EmployeeCount " +
+                               "FROM employeePayroll " +
+                               "GROUP BY Gender";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    Console.WriteLine("Gender\tTotal Salary\tAverage Salary\tMinimum Salary\tMaximum Salary\tEmployee Count");
+                    Console.WriteLine("-------------------------------------------------------------------------------");
+
+                    while (reader.Read())
+                    {
+                        string gender = reader.GetString(0);
+                        decimal totalSalary = reader.GetDecimal(1);
+                        decimal averageSalary = reader.GetDecimal(2);
+                        decimal minSalary = reader.GetDecimal(3);
+                        decimal maxSalary = reader.GetDecimal(4);
+                        int employeeCount = reader.GetInt32(5);
+
+                        Console.WriteLine($"{gender}\t{totalSalary}\t{averageSalary}\t{minSalary}\t{maxSalary}\t{employeeCount}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No gender analysis data found.");
+                }
+
+                reader.Close();
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+
+
 
     }
 }

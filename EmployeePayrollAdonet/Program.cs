@@ -24,12 +24,19 @@ namespace EmployeePayrollAdonet
             // DateTime endDate = DateTime.Now;
             // obj.RetrieveEmployeesByDateRange(startDate, endDate);
 
-            // UC6 :- Add Geneder and update table row
-            obj.AddGenderToEmployeePayrollTable();
-            // Update the gender of employees
-            obj.UpdateEmployeeGender("karan", "M");
-            obj.UpdateEmployeeGender("krishna", "M");
 
+
+            // UC6 :- Add Geneder and update table row
+            //obj.AddGenderToEmployeePayrollTable();
+
+            // Update the gender of employees
+            //obj.UpdateEmployeeGender("karan", "M");
+            //obj.UpdateEmployeeGender("krishna", "M");
+
+
+
+            // UC7:- PERFORM AGGREGATE FUNCTION ON TABLE DATA 
+            obj.AggregateAndGenderAnalysis();
 
 
         }
