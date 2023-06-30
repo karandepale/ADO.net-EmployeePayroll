@@ -9,6 +9,8 @@ namespace EmployeePayrollAdonet
 {
     public class PayrollServices
     {
+
+        // ------------ UC1:- Create DataBase --------------
         public void CreateDataBase()
         {
             try
@@ -28,6 +30,8 @@ namespace EmployeePayrollAdonet
 
         }
 
+
+        //------- UC2:- CREATE  DATABASE  TABLE------------------
         public void CreateTable()
         {
             try
@@ -60,6 +64,8 @@ namespace EmployeePayrollAdonet
 
         }
 
+
+        //-------- UC3:- INSERTING RECORDS INTO TABLE ------------------
         public void InsertData()
         {
             try
@@ -131,6 +137,8 @@ namespace EmployeePayrollAdonet
         }
 
 
+
+        //---------- UC4:- RETRIVING ALL THE RECORDS FROM TABLE-----------------
         public void RetrieveData()
         {
             try
@@ -185,6 +193,7 @@ namespace EmployeePayrollAdonet
 
 
 
+        //---- UC5(PART:-01) RETRIVING ONLY SALARY FOR PARTICULAR EMPLOYEE BY NAME---------
         public void RetrieveSalaryData(string employeeName)
         {
             try
@@ -222,6 +231,8 @@ namespace EmployeePayrollAdonet
             }
         }
 
+
+        // ------ UC5(PART:-02) RETRIVING RECORDS FROM GIVEN DATE RANGE ------------
         public void RetrieveEmployeesByDateRange(DateTime startDate, DateTime endDate)
         {
             try
@@ -265,6 +276,54 @@ namespace EmployeePayrollAdonet
                 }
 
                 reader.Close();
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+
+        // ---------- UC6(PART:-01):- ADDING GENDER COLUMN  ---------
+        public void AddGenderToEmployeePayrollTable()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(@"data source=DESKTOP-HDRGJGO\SQLEXPRESS; initial catalog=Payroll_Service; integrated security=true;");
+                con.Open();
+
+                string query = "ALTER TABLE employeePayroll ADD Gender varchar(10)";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Gender field added to the employeePayroll table.");
+
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+
+        //------------ UC6(PART:-02):- UPDATE RECORDS ---------------
+        public void UpdateEmployeeGender(string employeeName, string gender)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(@"data source=DESKTOP-HDRGJGO\SQLEXPRESS; initial catalog=Payroll_Service; integrated security=true;");
+                con.Open();
+
+                string query = $"UPDATE employeePayroll SET Gender = '{gender}' WHERE Name = '{employeeName}'";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                Console.WriteLine($"{rowsAffected} row(s) updated.");
+
                 con.Close();
             }
             catch (Exception e)
