@@ -1,1 +1,15 @@
-﻿
+﻿+------------------------+        +------------------------+
+|      employeePayroll   |        |        Department       |
++------------------------+        +------------------------+
+| Columns_Id (PK)        |        | DepartmentId (PK)       |
+| Name                   |        | DepartmentName          |
+| Salary                 |        +------------------------+
+| StartDate              |
+| Gender                 |
+| Phone                  |
+| Address                |
+| Deduction              |
+| Taxable_Pay            |
+| Income_Tax             |
+| Net_Pay                |
++------------------------+
