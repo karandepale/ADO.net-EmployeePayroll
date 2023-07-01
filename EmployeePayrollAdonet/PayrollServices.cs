@@ -428,7 +428,9 @@ namespace EmployeePayrollAdonet
 
 
 
-        // UC8:- EXTEND TABLE (ADDING  EXTRA COLUMNS INTO TABLE)
+
+
+        // UC8:- EXTEND TABLE (ADDING EXTRA COLUMNS INTO TABLE)
         public void ExtendEmployeePayrollTable()
         {
             try
@@ -437,9 +439,12 @@ namespace EmployeePayrollAdonet
                 con.Open();
 
                 // Add new columns to the employeePayroll table
-                string query = "ALTER TABLE employeePayroll " +
-                               "ADD Address VARCHAR(200) DEFAULT 'Not specified', " +
-                               "    Department VARCHAR(200) NOT NULL";
+                string query = @"ALTER TABLE employeePayroll
+                        ADD Basic_Pay DECIMAL(18, 2),
+                            Deductions DECIMAL(18, 2),
+                            Taxable_Pay DECIMAL(18, 2),
+                            Income_Tax DECIMAL(18, 2),
+                            Net_Pay DECIMAL(18, 2)";
 
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.ExecuteNonQuery();
@@ -452,6 +457,9 @@ namespace EmployeePayrollAdonet
                 Console.WriteLine(e.Message);
             }
         }
+
+
+
 
 
 
