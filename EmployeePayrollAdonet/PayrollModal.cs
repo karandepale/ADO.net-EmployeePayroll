@@ -20,5 +20,12 @@ namespace EmployeePayrollAdonet
         public int Taxable_Pay { get; set; }
         public int Income_Tax { get; set; }
         public int Net_Pay { get; set; }
+
+        public List<DepartmentModal> Departments { get; set; }
+    }
+    internal class DepartmentModal
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
     }
 }

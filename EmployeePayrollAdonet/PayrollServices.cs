@@ -382,6 +382,51 @@ namespace EmployeePayrollAdonet
         }
 
 
+        public void RetrieveDepartmentsForEmployee(int employeeId)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(@"data source=DESKTOP-HDRGJGO\SQLEXPRESS; initial catalog=Payroll_Service; integrated security=true;");
+                con.Open();
+
+                string query = $"SELECT d.ID, d.Name FROM Department d " +
+                               $"INNER JOIN EmployeeDepartment ed ON d.ID = ed.DepartmentID " +
+                               $"WHERE ed.EmployeeID = {employeeId}";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    Console.WriteLine($"Departments for Employee ID {employeeId}:");
+                    Console.WriteLine("Department ID\tDepartment Name");
+                    Console.WriteLine("---------------------------------");
+
+                    while (reader.Read())
+                    {
+                        int departmentId = reader.GetInt32(0);
+                        string departmentName = reader.GetString(1);
+
+                        Console.WriteLine($"{departmentId}\t\t{departmentName}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"No departments found for Employee ID {employeeId}.");
+                }
+
+                reader.Close();
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+
+
+
 
         // UC8:- EXTEND TABLE (ADDING  EXTRA COLUMNS INTO TABLE)
         public void ExtendEmployeePayrollTable()

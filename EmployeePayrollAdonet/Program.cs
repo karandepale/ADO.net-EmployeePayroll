@@ -41,8 +41,14 @@ namespace EmployeePayrollAdonet
 
 
             // UC8:- ADDING NEW COLUMNS INTO TABLE 
-            obj.ExtendEmployeePayrollTable();
+            // obj.ExtendEmployeePayrollTable();
 
+
+            //UC10
+            int employeeId = 1; // Provide the desired employee ID here
+            obj.RetrieveDepartmentsForEmployee(employeeId);
+
+            Console.ReadLine();
 
         }
     }
